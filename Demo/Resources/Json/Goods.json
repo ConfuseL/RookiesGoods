@@ -1,0 +1,91 @@
+[
+  {
+    "id": 1,
+    "classType": "RookiesGoods_SuitBase",
+    "itemType": "equipment",
+    "name": "木制盾牌",
+    "maxNum": 1,
+    "spritePath": "Sprites/1",
+    "intro": "你看这个盾它又厚又圆",
+    "effect": "提高15点防御力",
+    "compositeArray": [ 2, 2 ],
+    "durability": 25,
+    "specialProperty": {
+      "def": 15
+    }
+  },
+  {
+    "id": 2,
+    "classType": "RookiesGoods_Composite",
+    "itemType": "material",
+    "name": "木材",
+    "maxNum": 5,
+    "spritePath": "Sprites/2",
+    "intro": "大树下捡到的树枝劈制而成",
+    "effect": "基础合成物",
+    "compositeArray": [],
+    "durability": 0,
+    "specialProperty": {}
+  },
+  {
+    "id": 3,
+    "classType": "RookiesGoods_Consumable",
+    "itemType": "food",
+    "name": "鸡肉",
+    "maxNum": 5,
+    "spritePath": "Sprites/3",
+    "intro": "看饿了",
+    "effect": "恢复20点生命值",
+    "compositeArray": [],
+    "durability": 0,
+    "specialProperty": {
+      "hp": 20
+    }
+  },
+  {
+    "id": 4,
+    "classType": "RookiesGoods_Consumable",
+    "itemType": "food",
+    "name": "蜂蜜",
+    "maxNum": 5,
+    "spritePath": "Sprites/4",
+    "intro": "一定很甜",
+    "effect": "恢复10点蓝量",
+    "compositeArray": [],
+    "durability": 0,
+    "specialProperty": {
+      "mp": 10
+    }
+  },
+  {
+    "id": 5,
+    "classType": "RookiesGoods_Consumable",
+    "itemType": "food",
+    "name": "蜜汁烤鸡",
+    "maxNum": 5,
+    "spritePath": "Sprites/5",
+    "intro": "现已加入豪华午餐",
+    "effect": "恢复40点生命值、30点蓝量",
+    "compositeArray": [3,1,4,2],
+    "durability": 0,
+    "specialProperty": {
+      "hp": 40,
+      "mp": 30
+    }
+  },
+  {
+    "id": 6,
+    "classType": "RookiesGoods_SuitBase",
+    "itemType": "equipment",
+    "name": "木棒",
+    "maxNum": 1,
+    "spritePath": "Sprites/6",
+    "intro": "枯枝制作而成，看起来很脆",
+    "effect": "提高15点攻击力",
+    "compositeArray": [ 2, 1 ],
+    "durability": 20,
+    "specialProperty": {
+      "atk": 15
+    }
+  }
+]

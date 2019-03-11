@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RookiesGoods_Config>
+  <JsonPath>
+    <Path>Json/Goods</Path>
+  </JsonPath>
+  <BagMenu>
+    <FoodBag>
+      <Volume>6</Volume>
+      <Type>food</Type>
+    </FoodBag>
+    <MaterialBag>
+      <Volume>6</Volume>
+      <Type>material</Type>
+    </MaterialBag>
+    <EquipmentBag>
+      <Volume>6</Volume>
+      <Type>equipment</Type>
+    </EquipmentBag>
+    <HandBag>
+      <Volume>2</Volume>
+      <Type>equipment</Type>
+    </HandBag>
+  </BagMenu>
+</RookiesGoods_Config>
+
+
