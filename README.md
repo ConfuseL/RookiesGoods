@@ -35,11 +35,11 @@
 
 ## Simple Demo Screenshot
 
-![](http://confusel-images.oss-cn-shenzhen.aliyuncs.com/GitHub%E5%9B%BE%E5%BA%93/%E7%AE%80%E5%8D%95DEMO%E6%BC%94%E7%A4%BA.gif)
+![](https://raw.githubusercontent.com/ConfuseL/RookiesGoods/master/PreviewImage/%E7%AE%80%E5%8D%95DEMO%E6%BC%94%E7%A4%BA.gif)
 
 <center>Demo的UI比较简陋,，仅为展示框架功能</center>
 
-![](http://confusel-images.oss-cn-shenzhen.aliyuncs.com/GitHub%E5%9B%BE%E5%BA%93/%E8%80%90%E4%B9%85%E5%BA%A6%E5%BD%92%E9%9B%B6%E6%BC%94%E7%A4%BA.gif)
+![](https://raw.githubusercontent.com/ConfuseL/RookiesGoods/master/PreviewImage/%E8%80%90%E4%B9%85%E5%BA%A6%E5%BD%92%E9%9B%B6%E6%BC%94%E7%A4%BA.gif)
 
 <center>耐久度归零自动移除</center>
 
