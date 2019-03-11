@@ -99,19 +99,29 @@
 
 ##### 键值对说明：
 
-> "id": 物品的唯一标识符,
+> "id": 物品的唯一标识符
+>
 > "classType": 物品对应的框架类，只能为以下一种：
 > ​		1.普通物品：RookiesGoods_Composite
 > ​		2.消耗品：RookiesGoods_Consumable
 > ​		3.装备：RookiesGoods_SuitBase
+>
 > "itemType": 物品在游戏中的类型，例如武器、食物、药物等
+> 
 > "name":名字
+> 
 > "maxNum":在容器里一个格子最多存储的个数
+> 
 > "spritePath": 图片地址
+> 
 > "intro": 用于在游戏中展示物品的介绍，可以省略不写，仅""即可
+> 
 > "effect": 实际效果说明，可以省略不写，仅""即可
+> 
 > "durability": 0,耐久度，仅在classType为装备类RookiesGoods_SuitBase时有效，为0代表无限耐久
+> 
 > "compositeArray": []合成数组，第一位为所需物品id，第二位为数量，第三位为下一个所需物品的id，第四位为数量，以此类推
+> 
 > "specialProperty": {}自定义的属性
 
 #### 例子：
@@ -151,6 +161,7 @@
 ##### 说明：
 
 > id为1的木棒，对应的类是框架中的装备类，在游戏中它属于武器，在所有容器中，一个格子只能存放一个木棒，它的耐久度是20，由1个id为2的物品组成，拥有一个特殊属性：atk -> 攻击力 值是15。
+> 
 > id为2的枯枝，对应的类是框架中的普通物品类，在游戏中它属于材料，在所有容器中，一个格子只能放5个枯枝，因为它不是装备类，因此不具有耐久度属性，不能被合成，没有特殊属性。
 
 
@@ -158,6 +169,7 @@
 ## 配置容器
 
 > 打开RookiesGoods/Config/RookiesGoods_Config.xml
+> 
 > 配置json文件的路径以及进行适合您游戏角色拥有的容器配置。
 
 
@@ -183,14 +195,23 @@
 
 ##### 节点说明：
 
-> <RookiesGoods_Config>配置文件头节点
-> <JsonPath>//子节点，存储物品json文件的路径
->   <Path>由于读取时使用Resource.load读取，因此文件路径在编辑器中为Asset/Resource/xxx/.../yyy.json 中的xxx/.../yyy ，无需后缀名
-> <BagMenu>//子节点，存储容器配置
-> ​	<BagName>//容器的名字 自定义
->   <Volume>//存储的容量，也就是格子数
->   <Type>//存储的类型，注意，是游戏中的种类，与物品json文件中的itemType对应，而不是框架的类
+```xml
+<?xml version="1.0" encoding="utf-8"?>
 
+<RookiesGoods_Config>
+  <JsonPath>
+    <Path>存储物品json文件的路径</Path>
+	  <!--由于读取时使用Resource.load读取，因此文件路径在编辑器中为Asset/Resource/xxx/.../yyy.json 中的xxx/.../yyy ，无需后缀名-->
+  </JsonPath>
+<BagMenu>
+  <容器的名字>
+    <Volume>存储的容量，也就是格子数</Volume>
+    <Type>存储的类型，注意，是游戏中的种类，与物品json文件中的itemType对应，而不是框架的类</Type>
+  </容器的名字>
+</BagMenu>
+</RookiesGoods_Config>
+
+```
 #### 例子：
 
 ```xml
@@ -220,6 +241,7 @@
 > 创建了两个容器：
 >
 > 一个叫做HandBag，可以理解为手持栏，它存储游戏中的武器类型物品，容量为2，即两个格子
+> 
 > 另一个叫MaterialBag，可以理解为材料包，它存储游戏中的材料类型物品，容量为30，即三十个格子
 
 
