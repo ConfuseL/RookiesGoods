@@ -144,7 +144,8 @@ public class RookiesGoods_OverallManage
                 intValue = data["durability"];
                 durability = int.Parse(intValue.ToString());
                 arrayValues = data["compositeArray"];
-                SpriteDic.Add(id,Resources.Load<Sprite>(sprite));
+				if(sprite!="")
+					SpriteDic.Add(id,Resources.Load<Sprite>(sprite));
                 switch (classType)
                 {
                     case "RookiesGoods_SuitBase":
