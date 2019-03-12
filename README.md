@@ -64,4 +64,4 @@
 # 配置和使用
 
 
-移步至本库[wiki](https://github.com/ConfuseL/RookiesGoods/wiki)
+> 内容以移步至本库[wiki](https://github.com/ConfuseL/RookiesGoods/wiki)
