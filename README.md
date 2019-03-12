@@ -1,5 +1,5 @@
 # RookiesGoods
-![](https://img.shields.io/badge/language-c#-orange.svg?style=flat-square)![](https://img.shields.io/badge/support-unity3D-lightgrey.svg?style=flat-square)
+![](https://img.shields.io/badge/language-C%23-blue.svg?style=flat-square)  ![](https://img.shields.io/badge/support-unity3D-lightgrey.svg?style=flat-square)
 
 
 
