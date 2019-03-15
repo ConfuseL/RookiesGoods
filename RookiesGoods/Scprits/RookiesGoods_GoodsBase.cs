@@ -55,6 +55,9 @@ public class RookiesGoods_GoodsBase
     public object TryGetProperty(string propertyName)
     {
         Property.TryGetValue(propertyName, out object res);
+        //7.0以下用
+        //object res = null;
+        //Property.TryGetValue(propertyName, out  res);
         return res;
     }
 
