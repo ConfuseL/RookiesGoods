@@ -11,16 +11,20 @@ public class RookiesGoods_GoodsBase
     /// <summary>
     /// 特殊标识符
     /// </summary>
-    public int SpecialId { private set ; get; }
+    public int SpecialId { private set; get; }
 
     /// <summary>
     /// 物品名字
     /// </summary>
     public string Name { private set; get; }
     /// <summary>
-    /// 物品类型
+    /// 物品存储类型
     /// </summary>
     public string ItemType { private set; get; }
+    /// <summary>
+    /// 物品对象类型
+    /// </summary>
+    public string Type { private set; get; }
     /// <summary>
     /// 物品介绍
     /// </summary>
@@ -33,15 +37,19 @@ public class RookiesGoods_GoodsBase
     /// <summary>
     /// 动态属性
     /// </summary>
-    private Dictionary<string, object> Property { get;  set; }
+    private Dictionary<string, object> Property { get; set; }
 
     /// <summary>
     /// 在角色的物品容器中，单格储存的最大量
     /// </summary>
     public int MaxNum { private set; get; }
 
+    public void SetType(string type)
+    {
+        Type = type;
+    }
 
-    public RookiesGoods_GoodsBase(int id,string name, string type, string intro, string effect ,int maxNum)
+    public RookiesGoods_GoodsBase(int id, string name, string type, string intro, string effect, int maxNum)
     {
         Id = id;
         Name = name;
@@ -54,14 +62,12 @@ public class RookiesGoods_GoodsBase
 
     public object TryGetProperty(string propertyName)
     {
-        Property.TryGetValue(propertyName, out object res);
-        //7.0以下用
-        //object res = null;
-        //Property.TryGetValue(propertyName, out  res);
+        object res = null;
+       Property.TryGetValue(propertyName, out  res);
         return res;
     }
 
-    public void AddProperty(string propertyName,object target)
+    public void AddProperty(string propertyName, object target)
     {
         if (Property == null)
             Property = new Dictionary<string, object>();
@@ -97,7 +103,7 @@ public interface Composite
 /// </summary>
 public interface DurabilityByCount
 {
-    int Durability { get;  set; }
+    int Durability { get; set; }
 
     void BeUsed();
 

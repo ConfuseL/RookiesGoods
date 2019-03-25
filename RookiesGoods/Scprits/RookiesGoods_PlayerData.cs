@@ -3,6 +3,10 @@ using UnityEngine;
 using System.Xml;
 using System.Text.RegularExpressions;
 using System;
+using System.IO;
+using System.Text;
+using LitJson;
+
 public abstract class RookiesGoods_PlayerData :MonoBehaviour
 {
     /// <summary>
@@ -29,27 +33,46 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
     /// <summary>
     /// 合成成功的回调
     /// </summary>
-    /// /// <param name="composite">合成物的信息</param>
+    ///<param name="composite">合成物的信息</param>
     public abstract void OnComposeSuccessful(RookiesGoods_Composite composite);
 
 
     /// <summary>
     /// 合成失败的回调
     /// </summary>
-    /// /// <param name="composite">合成物的信息</param>
+    /// <param name="composite">合成物的信息</param>
+    ///  <param name="reason">失败原因</param>
     public abstract void OnComposeFailed(RookiesGoods_Composite composite, string reason);
+
+    /// <summary>
+    /// 物品数据存储成功的回调
+    /// </summary>
+    public abstract void OnSavingSuccessful();
+
+
+    /// <summary>
+    /// 物品数据加载成功的回调
+    /// </summary>
+    public abstract void OnLoadingSuccessful();
+
+    /// <summary>
+    /// 物品数据加载失败的回调
+    /// </summary>
+    ///  <param name="reason">失败原因</param>
+    public abstract void OnLoadingFailed(string reason);
 
     /// <summary>
     /// 使用成功的回调
     /// </summary>
-    /// /// <param name="composite">合成物的信息</param>
+    ///  <param name="composite">合成物的信息</param>
     public abstract void OnUsedSomething(RookiesGoods_Consumable  consumable);
 
     /// <summary>
     /// 装备成功的回调
     /// </summary>
     /// <param name="suit">装备的信息</param>
-    public abstract void OnSuitUpSomething(RookiesGoods_SuitBase suit);
+    /// <param name="isAfterLoading">是否调用于数据加载之后</param>
+    public abstract void OnSuitUpSomething(RookiesGoods_SuitBase suit,bool isAfterLoading = false);
 
 
 
@@ -177,14 +200,105 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
         return flag;
     }
 
-    
+   public void Load()
+    {
+        JsonData jsonData = JsonMapper.ToObject(File.ReadAllText(Application.persistentDataPath + "/save/playerdata" + PlayerId + ".sav"));
+        foreach (JsonData bag in jsonData)
+        {
+                TryGetBag(bag["name"].ToString()).UpdateVloume(int.Parse(bag["Volume"].ToString()));
+            int cnt = 0,id=0;
+            foreach(JsonData array in  bag["data"])
+            {
+                if(cnt++%2==0)
+                {
+                    id = int.Parse(array.ToString());
+                }
+                else
+                {
+                    if (int.Parse(array.ToString()) < 0)
+                   {
+                       RookiesGoods_SuitBase temp = (RookiesGoods_SuitBase)RookiesGoods_OverallManage.GoodsManage.GetGoods(id);
+                        temp.Durability = int.Parse(array.ToString()) * -1;
+                        TryGetBag(bag["name"].ToString()).Add(temp);
+                    }
+                    else
+                    {
+                        RookiesGoods_GoodsBase temp = RookiesGoods_OverallManage.GoodsManage.GetGoods(id);
+                        TryGetBag(bag["name"].ToString()).Add(temp, int.Parse(array.ToString()));
+                    }
+                }
+            }
+                
+        }
+        OnLoadingSuccessful();
+    }
+
+    public void Save()
+    {
+        if (Directory.Exists(Application.persistentDataPath + "/save") == false)
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/save");
+        }
+        string path = Application.persistentDataPath + "/save/playerdata" + PlayerId + ".sav";
+        StringBuilder sb = new StringBuilder();
+        JsonWriter writer = new JsonWriter(sb);
+
+        writer.WriteArrayStart();
+
+        foreach(KeyValuePair<string,RookiesGoods_Bag> temp in Bags)
+
+        {
+            writer.WriteObjectStart();
+            writer.WritePropertyName("name");
+            writer.Write(temp.Key);
+            writer.WritePropertyName("Volume");
+            writer.Write(temp.Value.Vloume);
+            writer.WritePropertyName("data");
+            writer.WriteArrayStart();
+            List<RookiesGoods_Grid> grids = temp.Value.Try2GetGoodsMessage();
+            for(int i=0;i<grids.Count;i++)
+            {
+                writer.Write(grids[i].Item.Id);
+                if(grids[i].Item.Type.Equals("RookiesGoods_SuitBase"))
+                {
+                    if(((RookiesGoods_SuitBase)grids[i].Item).Durability!=0)
+                    {
+                        writer.Write(((RookiesGoods_SuitBase)grids[i].Item).Durability*-1);
+                    }
+                    else
+                    writer.Write(1);
+                }
+                else
+                writer.Write(grids[i].Num);
+            }
+            writer.WriteArrayEnd();
+           // writer.WriteObjectEnd();
+            writer.WriteObjectEnd();
+        }
+        writer.WriteArrayEnd();
+
+        StreamWriter sw = new StreamWriter(path, false, Encoding.GetEncoding("utf-8"));
+        string json = Regex.Unescape(sb.ToString());
+        sw.Write(json);
+        sw.Close();
+        sw.Dispose();
+        OnSavingSuccessful();
+    }
 
     public void Init(int playerID)
     {
         PlayerId = playerID;
-        //TODO 读取角色文件，发现是否有存档，有就读取 否则
-        LoadXML();
         RookiesGoods_OverallManage.GoodsManage.RegisterPlayer(this);
+        if (File.Exists(Application.persistentDataPath + "/save/playerdata" + playerID + ".sav"))
+        {
+            LoadXML();
+            Load();
+        }
+        else
+        {
+            LoadXML();
+            OnLoadingFailed("没有发现存档");
+        }
     }
 
     private void LoadXML()
@@ -376,5 +490,10 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
             OnComposeSuccessful(target);
             return true;
         }
+    }
+    private void OnDestroy()
+    {
+        if (RookiesGoods_OverallManage.GoodsManage.IsSavingAfterQuit)
+            Save();
     }
 }

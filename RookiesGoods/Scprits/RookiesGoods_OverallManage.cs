@@ -23,10 +23,12 @@ public class RookiesGoods_OverallManage
 
     private Dictionary<int, RookiesGoods_PlayerData> PlayersData { get; set; }
 
+    public bool IsSavingAfterQuit { get; set;}
 
     // Start is called before the first frame update
     public RookiesGoods_OverallManage()
     {
+        IsSavingAfterQuit = false;
         PrototypeGoodsMenu = new Dictionary<int, RookiesGoods_GoodsBase>();
         DurabilityID = new List<int>();
         SpriteDic = new Dictionary<int, Sprite>();
@@ -88,8 +90,10 @@ public class RookiesGoods_OverallManage
     {
         RookiesGoods_GoodsBase goods;
         PrototypeGoodsMenu.TryGetValue(id,out goods);
-
-        return DeepCopy(goods);
+        if (goods.Type.Equals("RookiesGoods_SuitBase"))
+            if (((RookiesGoods_SuitBase)goods).Durability != 0)
+                return DeepCopy(goods);
+        return goods;
     }
 
     public Sprite Try2GetSprite(int id)
@@ -118,6 +122,7 @@ public class RookiesGoods_OverallManage
             string classType, itemType, name, intro, effect,sprite;
             int id, maxNum, durability,length;
             int[] arrayValue;
+            List<int> listValue=new List<int>();
             TextAsset textAsset = Resources.Load(path) as TextAsset;
             JsonData jsonData = JsonMapper.ToObject(textAsset.text);
             foreach (JsonData data in jsonData)
@@ -151,6 +156,7 @@ public class RookiesGoods_OverallManage
                     case "RookiesGoods_SuitBase":
                         RookiesGoods_SuitBase suit;
                         suit = new RookiesGoods_SuitBase(id, name, itemType, intro, effect, maxNum);
+                        suit.SetType(classType);
                         length = arrayValues.Count;
                         arrayValue = new int[length];
                         for (int i = 0; i < length; i++)
@@ -174,11 +180,11 @@ public class RookiesGoods_OverallManage
                                     break;
                                 case JsonType.Array:
                                     length = temp.Count;
-                                    arrayValue = new int[length];
+                                    listValue.Clear();
                                     for (int i = 0; i < length; i++)
-                                        arrayValue[i] = int.Parse(temp[i].ToString());
+                                        listValue.Add(int.Parse(temp[i].ToString()));
                                     if (length > 0)
-                                        suit.AddProperty(key, arrayValue);
+                                        suit.AddProperty(key, listValue);
                                         break;
                                 case JsonType.String:
                                     suit.AddProperty(key, temp.ToString());                                   
@@ -204,6 +210,7 @@ public class RookiesGoods_OverallManage
                     case "RookiesGoods_Composite":
                         RookiesGoods_Composite goods;                     
                         goods = new RookiesGoods_Composite(id, name, itemType, intro, effect, maxNum);
+                        goods.SetType(classType);
                         length = arrayValues.Count;
                         arrayValue = new int[length];
                         for (int i = 0; i < length; i++)
@@ -226,11 +233,11 @@ public class RookiesGoods_OverallManage
                                     break;
                                 case JsonType.Array:
                                     length = temp.Count;
-                                    arrayValue = new int[length];
+                                    listValue.Clear();
                                     for (int i = 0; i < length; i++)
-                                        arrayValue[i] = int.Parse(temp[i].ToString());
+                                        listValue.Add(int.Parse(temp[i].ToString()));
                                     if (length > 0)
-                                        goods.AddProperty(key, arrayValue);
+                                        goods.AddProperty(key, listValue);
                                     break;
                                 case JsonType.String:
                                     goods.AddProperty(key, temp.ToString());
@@ -256,6 +263,7 @@ public class RookiesGoods_OverallManage
                     case "RookiesGoods_Consumable":
                         RookiesGoods_Consumable consumable;
                         consumable = new RookiesGoods_Consumable(id, name, itemType, intro, effect, maxNum);
+                        consumable.SetType(classType);
                         length = arrayValues.Count;
                         arrayValue = new int[length];
                         for (int i = 0; i < length; i++)
@@ -278,11 +286,11 @@ public class RookiesGoods_OverallManage
                                     break;
                                 case JsonType.Array:
                                     length = temp.Count;
-                                    arrayValue = new int[length];
+                                    listValue.Clear();
                                     for (int i = 0; i < length; i++)
-                                        arrayValue[i] = int.Parse(temp[i].ToString());
+                                        listValue.Add(int.Parse(temp[i].ToString()));
                                     if (length > 0)
-                                        consumable.AddProperty(key, arrayValue);
+                                        consumable.AddProperty(key, listValue);
                                     break;
                                 case JsonType.String:
                                     consumable.AddProperty(key, temp.ToString());
@@ -314,5 +322,14 @@ public class RookiesGoods_OverallManage
         {
             throw new ArgumentException("丢失物品配置文件");
         }
+    }
+
+    /// <summary>
+    /// 全部物品数据存档
+    /// </summary>
+    public void SaveAll()
+    {
+        foreach (RookiesGoods_PlayerData temp in PlayersData.Values)
+            temp.Save();
     }
 }

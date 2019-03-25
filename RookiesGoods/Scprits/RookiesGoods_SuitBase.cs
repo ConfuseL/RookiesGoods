@@ -14,8 +14,9 @@ public class RookiesGoods_SuitBase : RookiesGoods_Composite,DurabilityByCount
     /// 装备给某角色
     /// </summary>
     /// <param name="player">角色</param>
+    /// <param name="isAfterLoading">是否调用于数据加载之后</param>
     /// <returns>装备是否成功</returns>
-    public bool SuitUp(RookiesGoods_PlayerData player)
+    public bool SuitUp(RookiesGoods_PlayerData player,bool isAfterLoading=false)
     {
         if (player == null)
             return false;
@@ -27,7 +28,7 @@ public class RookiesGoods_SuitBase : RookiesGoods_Composite,DurabilityByCount
                 SetSpecialID(RookiesGoods_OverallManage.GoodsManage.RegisterDurabilityGoods(Id));
             }
         }
-        player.OnSuitUpSomething(this);
+        player.OnSuitUpSomething(this, isAfterLoading);
         return true;
     }
     /// <summary>
