@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <RookiesGoods_Config>
   <JsonPath>
     <Path>Json/Goods</Path>
   </JsonPath>
+  <SaveTypes>
+    <Type id="0" type="all" />
+    <Type id="1" type="food" />
+    <Type id="2" type="material" />
+    <Type id="3" type="equipment" />
+  </SaveTypes>
   <BagMenu>
     <FoodBag>
       <Volume>6</Volume>

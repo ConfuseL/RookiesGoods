@@ -12,10 +12,12 @@ public class RookiesGoods_Composite : RookiesGoods_GoodsBase, Composite
 
     public void UpdateComposite(int[] compositeTable)
     {
-        CompositeTable = new Dictionary<int, int>();
+        if (CompositeTable == null)
+            CompositeTable = new Dictionary<int, int>();
+        else
+            CompositeTable.Clear();
         for (int i = 0; i < compositeTable.Length; i += 2)
             CompositeTable.Add(compositeTable[i], compositeTable[i + 1]);
     }
 
-   
 }

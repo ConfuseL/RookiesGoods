@@ -100,13 +100,6 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
         int more= num;
         if (BagsMenu.ContainsKey("ALL"))
         {
-            //RookiesGoods_Bag temp;
-            //Bags.TryGetValue(BagsMenu["ALL"], out temp);
-            //if (temp != null)
-            //{
-            //    more=temp.Add(goods, num);
-            //}
-
             List<string> bags= BagsMenu["ALL"];
             for (int i = 0; i < bags.Count; i++)
             {
@@ -120,7 +113,7 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
         }
         if (more > 0)
         {
-            if (BagsMenu.ContainsKey(goods.ItemType.ToUpper()))
+            if (BagsMenu.ContainsKey(goods.SaveType.ToUpper()))
             {
                 //RookiesGoods_Bag temp;
                 //Bags.TryGetValue(BagsMenu[goods.ItemType.ToUpper()], out temp);
@@ -128,7 +121,7 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
                 //{
                 //    more = temp.Add(goods, num);
                 //}
-                List<string> bags = BagsMenu[goods.ItemType.ToUpper()];
+                List<string> bags = BagsMenu[goods.SaveType.ToUpper()];
                 for (int i = 0; i < bags.Count; i++)
                 {
                     RookiesGoods_Bag temp;
@@ -174,7 +167,7 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
         }
         else if(flag==false)
         {
-            if (BagsMenu.ContainsKey(goods.ItemType.ToUpper()))
+            if (BagsMenu.ContainsKey(goods.SaveType.ToUpper()))
             {
                 //RookiesGoods_Bag temp;
                 //Bags.TryGetValue(BagsMenu[goods.ItemType.ToUpper()], out temp);
@@ -182,7 +175,7 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
                 //{
                 //    flag = temp.Delete(goods.Id, num, specialID);
                 //}
-                List<string> bags = BagsMenu[goods.ItemType.ToUpper()];
+                List<string> bags = BagsMenu[goods.SaveType.ToUpper()];
                 for (int i = 0; i < bags.Count; i++)
                 {
                     RookiesGoods_Bag temp;
@@ -199,7 +192,9 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
         }
         return flag;
     }
-
+    /// <summary>
+    /// 读取物品存档
+    /// </summary>
    public void Load()
     {
         JsonData jsonData = JsonMapper.ToObject(File.ReadAllText(Application.persistentDataPath + "/save/playerdata" + PlayerId + ".sav"));
@@ -232,7 +227,9 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
         }
         OnLoadingSuccessful();
     }
-
+    /// <summary>
+    /// 存储物品存档
+    /// </summary>
     public void Save()
     {
         if (Directory.Exists(Application.persistentDataPath + "/save") == false)
@@ -284,9 +281,14 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
         sw.Dispose();
         OnSavingSuccessful();
     }
-
+    /// <summary>
+    /// 初始化角色管理器
+    /// </summary>
+    /// <param name="playerID">角色注册id</param>
     public void Init(int playerID)
     {
+        if(playerID<1)
+            throw new ArgumentException("ID不能小于1");
         PlayerId = playerID;
         RookiesGoods_OverallManage.GoodsManage.RegisterPlayer(this);
         if (File.Exists(Application.persistentDataPath + "/save/playerdata" + playerID + ".sav"))
@@ -300,7 +302,9 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
             OnLoadingFailed("没有发现存档");
         }
     }
-
+    /// <summary>
+    /// 加载背包XML，让角色重新装填容器
+    /// </summary>
     private void LoadXML()
     {
         BagsMenu = new Dictionary<string, List<string>>();
@@ -333,6 +337,11 @@ public abstract class RookiesGoods_PlayerData :MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 获取角色身上的某个容器 大小写不敏感
+    /// </summary>
+    /// <param name="bagName">容器名字</param>
+    /// <returns></returns>
     public RookiesGoods_Bag TryGetBag(string bagName)
     {
         RookiesGoods_Bag bag= null;

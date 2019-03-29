@@ -20,7 +20,7 @@ public class RookiesGoods_GoodsBase
     /// <summary>
     /// 物品存储类型
     /// </summary>
-    public string ItemType { private set; get; }
+    public string SaveType { private set; get; }
     /// <summary>
     /// 物品对象类型
     /// </summary>
@@ -35,9 +35,14 @@ public class RookiesGoods_GoodsBase
     public string Effect { private set; get; }
 
     /// <summary>
+    /// 图片路径
+    /// </summary>
+    public string Sprite { private set; get; }
+
+    /// <summary>
     /// 动态属性
     /// </summary>
-    private Dictionary<string, object> Property { get; set; }
+    public Dictionary<string, object> Property { get; private set; }
 
     /// <summary>
     /// 在角色的物品容器中，单格储存的最大量
@@ -49,15 +54,31 @@ public class RookiesGoods_GoodsBase
         Type = type;
     }
 
+    public void SetSpritePath(string path)
+    {
+        Sprite = path;
+    }
+
     public RookiesGoods_GoodsBase(int id, string name, string type, string intro, string effect, int maxNum)
     {
         Id = id;
         Name = name;
-        ItemType = type;
+        SaveType = type;
         Intro = intro;
         Effect = effect;
         MaxNum = maxNum;
-        //TODO 读取图片 添加至图片管理
+        Sprite = "";
+    }
+
+
+    public void ReSet(int id, string name, string type, string intro, string effect, int maxNum)
+    {
+        Id = id;
+        Name = name;
+        SaveType = type;
+        Intro = intro;
+        Effect = effect;
+        MaxNum = maxNum;
     }
 
     public object TryGetProperty(string propertyName)
@@ -83,6 +104,10 @@ public class RookiesGoods_GoodsBase
         this.SpecialId = SpecialId;
     }
 
+    public void ChangeSaveType(string target)
+    {
+        SaveType = target;
+    }
 }
 
 /// <summary>
