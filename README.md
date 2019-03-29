@@ -155,6 +155,8 @@
 
 ### 手动配置
 
+> 移步至本库[wiki首页](<https://github.com/ConfuseL/RookiesGoods/wiki>)
+
 ### 可以忽略的报错
 
 > 1. 当你删除物品，直到只剩下一个的时候会出现这个布局错误，但不会影响实际使用。
