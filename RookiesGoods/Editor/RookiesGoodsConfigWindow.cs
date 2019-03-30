@@ -497,15 +497,18 @@ public class RookiesGoodsConfigWindow : EditorWindow
         XmlDocument xml = new XmlDocument();
         xml.Load(Application.dataPath + "/RookiesGoods/Config/RookiesGoods_Config.xml");
         XmlNode root = xml.SelectSingleNode("RookiesGoods_Config");
-        XmlNodeList xmlNodeList = xml.SelectSingleNode("RookiesGoods_Config/SaveTypes").ChildNodes;
-        if (xmlNodeList != null)
+        if (xml.SelectSingleNode("RookiesGoods_Config/SaveTypes") != null)
         {
-           for(int i=0;i<xmlNodeList.Count;i++)
+            XmlNodeList xmlNodeList = xml.SelectSingleNode("RookiesGoods_Config/SaveTypes").ChildNodes;
+            if (xmlNodeList != null)
             {
-                temp.Add(xmlNodeList[i].Attributes["type"].Value.Equals("all")?"empty": xmlNodeList[i].Attributes["type"].Value);
+                for (int i = 0; i < xmlNodeList.Count; i++)
+                {
+                    temp.Add(xmlNodeList[i].Attributes["type"].Value.Equals("all") ? "empty" : xmlNodeList[i].Attributes["type"].Value);
+                }
             }
-            saveTypeOption = temp.ToArray();
         }
+        saveTypeOption = temp.ToArray();
     }
 
     void Save()

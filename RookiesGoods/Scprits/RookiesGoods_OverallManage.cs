@@ -509,6 +509,21 @@ public class RookiesGoods_OverallManage
         xml.Load(Application.dataPath + "/RookiesGoods/Config/RookiesGoods_Config.xml");
         XmlNodeList xmlNodeList = xml.SelectSingleNode("RookiesGoods_Config/JsonPath").ChildNodes;
         string path = xmlNodeList[0].InnerText;
+        for(int i = path.Length-1; i>=0;i--)
+        {
+            if (path[i] == '/')
+            {
+                path=string.Format("/"+path.Remove(i, path.Length-i));
+                break;
+            }
+            if (i == 0)
+                path = "";
+        }
+        if (!Directory.Exists(string.Format(Application.dataPath + "/Resources" + path)))
+        {
+            Directory.CreateDirectory(string.Format(Application.dataPath + "/Resources" + path));
+        }
+        path = xmlNodeList[0].InnerText;
         path = Application.dataPath + "/Resources/" + path + ".json";
         StringBuilder sb = new StringBuilder();
         JsonWriter writer = new JsonWriter(sb);

@@ -3,4 +3,8 @@
   <JsonPath>
     <Path>Json/Goods</Path>
   </JsonPath>
+  <BagMenu />
+  <SaveTypes>
+    <Type id="0" type="all" />
+  </SaveTypes>
 </RookiesGoods_Config>
