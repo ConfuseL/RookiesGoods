@@ -56,6 +56,7 @@ public class StorageConfigWindow : EditorWindow
         canSave = true;
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width),GUILayout.Height(position.height));
         GUILayout.Label(" 存储种类配置", label);
+        if(ModifiableTypeList.Count>0)
             EditorGUILayout.TextField("类型", ModifiableTypeList[0]);
             for (int i = 1; i < ModifiableTypeList.Count; i++)
             {

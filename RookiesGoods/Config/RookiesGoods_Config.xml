@@ -3,28 +3,4 @@
   <JsonPath>
     <Path>Json/Goods</Path>
   </JsonPath>
-  <BagMenu>
-    <FoodBag>
-      <Volume>6</Volume>
-      <Type>food</Type>
-    </FoodBag>
-    <MaterialBag>
-      <Volume>6</Volume>
-      <Type>material</Type>
-    </MaterialBag>
-    <EquipmentBag>
-      <Volume>6</Volume>
-      <Type>equipment</Type>
-    </EquipmentBag>
-    <HandBag>
-      <Volume>2</Volume>
-      <Type>equipment</Type>
-    </HandBag>
-  </BagMenu>
-  <SaveTypes>
-    <Type id="0" type="all" />
-    <Type id="1" type="food" />
-    <Type id="2" type="material" />
-    <Type id="3" type="equipment" />
-  </SaveTypes>
 </RookiesGoods_Config>
