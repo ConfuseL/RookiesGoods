@@ -103,10 +103,10 @@ public class RookiesGoodsConfigWindow : EditorWindow
         InitComposeMessage();
         Load();
         label.fontSize = 20;
+        RookiesGoods_OverallManage.GoodsManage.UpdateSaveChange += UpdateSaveType;
     }
     private void OnGUI()
     {
-        if (Event.current.type == EventType.KeyDown || Event.current.type == EventType.KeyUp) return;
         canSave = true;
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(position.width), GUILayout.Height(position.height));
         GUILayout.BeginVertical();
@@ -566,4 +566,13 @@ public class RookiesGoodsConfigWindow : EditorWindow
         RookiesGoods_OverallManage.GoodsManage.Save2JSON();
     }
 
+    void UpdateSaveType()
+    {
+        Load();
+        InitMessage();
+    }
+    private void OnDestroy()
+    {
+        RookiesGoods_OverallManage.GoodsManage.UpdateSaveChange -= UpdateSaveType;
+    }
 }

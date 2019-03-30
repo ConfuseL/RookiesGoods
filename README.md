@@ -3,7 +3,7 @@
 
 
 
-> 这是一个努力成为大部分Unity初学者适用的多角色物品管理插件框架，适用于单机游戏中拥有耐久度、可合成等关键字的物品数据管理需求。
+> 这是一个努力成为大部分Unity初学者适用的多角色物品管理框架插件，适用于单机游戏中拥有耐久度、可合成等关键字的物品数据管理需求。
 >
 > 学业紧张，不定时更新维护。
 
@@ -34,6 +34,10 @@
 
 
 ## Simple Demo Screenshot
+
+![](https://raw.githubusercontent.com/ConfuseL/RookiesGoods/master/PreviewImage/%E6%9B%B4%E6%94%B9%E5%AD%98%E5%82%A8%E7%A7%8D%E7%B1%BB%E6%BC%94%E7%A4%BA.gif)
+
+<center>编辑器更改存储种类预览</center>
 
 ![](https://raw.githubusercontent.com/ConfuseL/RookiesGoods/master/PreviewImage/%E7%AE%80%E5%8D%95DEMO%E6%BC%94%E7%A4%BA.gif)
 

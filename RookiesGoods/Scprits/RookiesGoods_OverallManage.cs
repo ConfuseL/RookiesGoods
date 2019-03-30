@@ -28,6 +28,8 @@ public class RookiesGoods_OverallManage
     private Dictionary<int, RookiesGoods_PlayerData> PlayersData { get; set; }
     //是否自动在游戏退出时保存角色数据
     public bool IsSavingAfterQuit { get; set;}
+    //更新存储类型 用于编辑器
+    public Action UpdateSaveChange;
 
     public RookiesGoods_OverallManage()
     {
@@ -376,18 +378,18 @@ public class RookiesGoods_OverallManage
                                                 consumable.AddProperty(key, intListValue);
                                                 break;
                                             case JsonType.String:
-                                                if(IsInt(temp[0].ToString()))
-                                                {
-                                                    for (int i = 0; i < length; i++)
-                                                        intListValue.Add(int.Parse(temp[i].ToString()));
-                                                    consumable.AddProperty(key, intListValue);
-                                                }
-                                                else
-                                                {
+                                                //if(IsInt(temp[0].ToString()))
+                                                //{
+                                                //    for (int i = 0; i < length; i++)
+                                                //        intListValue.Add(int.Parse(temp[i].ToString()));
+                                                //    consumable.AddProperty(key, intListValue);
+                                                //}
+                                                //else
+                                                //{
                                                     for (int i = 0; i < length; i++)
                                                         strListValue.Add(temp[i].ToString());
                                                     consumable.AddProperty(key, strListValue);
-                                                }
+                                               // }
    
                                                 break;
                                             case JsonType.Double:
@@ -586,7 +588,7 @@ public class RookiesGoods_OverallManage
                 writer.WritePropertyName(pro.Key);
                 if (pro.Value.GetType() == typeof(int))
                 {
-                    writer.Write(pro.Value.ToString());
+                    writer.Write((int)pro.Value);
                 }
                 else if (pro.Value.GetType() == typeof(List<int>))
                 {
@@ -597,7 +599,7 @@ public class RookiesGoods_OverallManage
                 }
                 else if (pro.Value.GetType() == typeof(double))
                 {
-                    writer.Write(pro.Value.ToString());
+                        writer.Write((double)pro.Value);
                 }
                 else if (pro.Value.GetType() == typeof(List<double>))
                 {
@@ -638,8 +640,8 @@ public class RookiesGoods_OverallManage
     /// </summary>
     /// <param name="value">判断的字符串</param>
     /// <returns>返回是否是整数</returns>
-    public static bool IsInt(string value)
-    {
-        return Regex.IsMatch(value, @"^[+-]?\d*$");
-    }
+    //public static bool IsInt(string value)
+    //{
+    //    return Regex.IsMatch(value, @"^[+-]?\d*$");
+    //}
 }

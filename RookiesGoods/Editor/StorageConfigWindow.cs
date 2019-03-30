@@ -255,6 +255,8 @@ public class StorageConfigWindow : EditorWindow
         //刷新json文件在Unity上的缓存 否则会一直是没存储前的json文件
         AssetDatabase.Refresh();
         Load();
+        if (RookiesGoods_OverallManage.GoodsManage.UpdateSaveChange != null)
+            RookiesGoods_OverallManage.GoodsManage.UpdateSaveChange();
     }
     void SaveContainer()
     {
